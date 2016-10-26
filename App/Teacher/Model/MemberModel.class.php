@@ -1,0 +1,1 @@
+<?phpnamespace Teacher\Model;use Think\Model;class MemberModel extends Model{    protected  $_validate=array(        array('phone','require','手机号必须！'),        array('phone','','手机号已经存在！',1,'unique',3),            );         }

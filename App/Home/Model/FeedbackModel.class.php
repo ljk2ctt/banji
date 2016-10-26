@@ -1,0 +1,1 @@
+<?phpnamespace Home\Model;use Think\Model;class FeedbackModel extends Model {    protected $_validate = array(        array('title', 'require', '请填写标题！',self::MUST_VALIDATE),        array('content', 'require', '请填写内容！',self::MUST_VALIDATE),    );    protected $_auto  =array(        array('addtime',NOW_TIME),    );}

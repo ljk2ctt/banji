@@ -1,0 +1,1 @@
+<?phpnamespace Teacher\Model;use Think\Model;class StudentModel extends Model {    protected $_validate = array(        array('name', 'require', '名称必须！'),        array('student_no', 'require', '学号必须！'),        array('sfz', 'require', '身份证号必须！'),    );    protected $_auto = array(        array('birthday', 'time', 1, 'function'),    );   }

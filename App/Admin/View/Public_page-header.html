@@ -1,0 +1,169 @@
+<div class="page-header">
+    <a href="{:U('Index/index')}">
+    <img src="/Public/Admin/images/logo.png" alt="" class="page-header-img"/>
+    </a>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pull-right page-portrait">
+        <div class="page-portrait-lf">
+            <img src="{:session('headimgurl')}" width='70' alt=""/>
+        </div>
+        <div class="dropdown page-portrait-ri">
+            <div class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                 aria-expanded="true">
+                <h4>{:session('nickname')}</h4>
+
+                <!--<p>Administrator</p>-->
+                <i class="glyphicon glyphicon-menu-down"></i>
+            </div>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="javascript:;"  data-toggle="modal" data-target="#resetModal">修改密码</a></li>
+                <li><a href="{:U('Login/logout')}">注销登录</a></li>
+<!--                <li><a href="#">Something else here</a></li>
+ <!--               <li><a href="#">Separated link</a></li>-->
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 page-header-icon pull-right">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 dropdown" id="dropdownMenu2" aria-haspopup="true" aria-expanded="true">
+            <i class="glyphicon glyphicon-envelope dropdown-toggle" data-toggle="dropdown">
+                <!--<span class="page-badge" style="background: #337ab7;">4</span>-->
+            </i>
+<!--            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>-->
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 dropdown" id="dropdownMenu3" aria-haspopup="true" aria-expanded="true">
+            <i class="glyphicon glyphicon-bell dropdown-toggle" data-toggle="dropdown" id="page_tishi">
+                <span class="page-badge" id="page_badge" style="display: none"></span>
+            </i>
+<!--            <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>-->
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 dropdown"  id="dropdownMenu4" aria-haspopup="true" aria-expanded="true">
+            <i class="glyphicon glyphicon-tasks dropdown-toggle" data-toggle="dropdown">
+                <!--<span class="page-badge" style="background: #68AE00;">4</span>-->
+            </i>
+<!--            <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                <li><a href="{:U('Member/shop')}">商户信息</a></li>
+                <li><a href="javascript:;"  data-toggle="modal" data-target="#funcModal">开通功能</a></li>
+            </ul>-->
+        </div>
+    </div>
+</div>
+<!-- 修改密码  resetModal -->
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="resetModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 400px; margin-left: 200px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="resetModalLabel">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form id="savepwdform">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">旧密码</label>
+                        <input type="password" class="form-control" name="opwd" id="exampleInputEmail1" placeholder="原始密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">新密码</label>
+                        <input type="password" class="form-control" name="pwd" id="exampleInputPassword1" placeholder="新密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword2">确认密码</label>
+                        <input type="password" class="form-control" name="rpwd" id="exampleInputPassword2" placeholder="再输入一次">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                <button type="button" class="btn btn-primary" id="savepwd">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 开通功能  funcModal -->
+<div class="modal fade" id="funcModal" tabindex="-1" role="dialog" aria-labelledby="resetModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 400px; margin-left: 200px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="funcModalLabel">功能</h4>
+            </div>
+            <div class="modal-body state-modal">
+                <table class="rechargeModal">
+                    <thead>
+                        <tr>                                
+                            <th width="30%">功能</th>
+                            <th width="30%">状态</th>
+                            <th width="30%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>餐饮</td>
+                            <td><switch name="is_canyin">
+                                    <case value="0">未开通</case>
+                                    <case value="1">待审核</case>
+                                    <case value="2">已开通</case>
+                                </switch></td>
+                            <td>
+                            <if condition="$is_canyin eq 0">
+                                <a class="link-update" href="{:U('Index/func?type=1&func=is_canyin')}">开通</a>
+                            </if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>商城</td>
+                            <td><switch name="is_shop">
+                                    <case value="0">未开通</case>
+                                    <case value="1">待审核</case>
+                                    <case value="2">已开通</case>
+                                </switch></td>
+                            <td>
+                            <if condition="$is_shop eq 0">
+                                <a class="link-update" href="{:U('Index/func?type=1&func=is_shop')}">开通</a>
+                            </if>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                <button type="button" class="btn btn-primary" id="savefunc">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+   $(document).ready(function(){
+       $("#savepwd").click(function(){
+           var fdata=$("#savepwdform").serialize();
+           $.post("{:U('Member/profile')}",fdata,function(data){
+               if(data.status==0)
+               {
+                   myalert(data.info);
+                   return false;
+               }
+               $("#resetModal").modal('hide');
+           },'json');
+       });
+   });
+</script>

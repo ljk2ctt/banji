@@ -1,0 +1,494 @@
+<style>
+    
+.resery-box{
+    font-family: punctuation,"PingFangSC-Regular","Microsoft Yahei","sans-serif"
+}
+.mycontent img{ width: 100% !important;height: auto !important;}
+</style>
+<div class="page-container">
+    <include file="Public:nav" />
+    <div class="page-Ri">
+        <div class="container-fluid">
+            <include file="Public:page-header" />     
+            <div id="content" style="display:none">
+            <jsvolist name="_list" id="_data">
+                <div class="col-lg-12" style="margin-bottom: 20px;overflow: hidden;">
+                <div class="resery-box" style="width: 100%; background: #e5e5e5;color: #FFFFFF;">
+                    <ul class="resery-friend-list" style="width: 900px; margin: auto;background: #292429; ">
+                        <li class="resery-friend-li" style="width: 900px;">
+                            <div class="resery-friend-head" style="min-height: 70px;padding: 20px;background: #312c31;border-bottom: 1px solid #212021;">
+                                <div style="width: 100%;overflow: hidden;">
+                                    <div class="pull-left" style="display: block">
+                                        <img src="{:session('minfo.headerurl')}" style="width: 50px;height: 50px;border-radius: 4px;" alt="">
+                                    </div>
+                                    <div class="pull-left" style="margin-left: 15px;display: block">
+                                        <h2 style="font-size: 16px; margin: 0;margin-bottom: 10px;color: #a6a6a6;">{_data.title}</h2>
+                                        <p style="font-size: 12px; color: #6b6b6b;">{_data.addtime|date2} <span>{_data.comment_count}人评论</span></p>
+                                    </div>
+                                    <div class="pull-right" style="margin-right: 15px;display: block">
+                                        <p style="font-size: 12px; color: #6b6b6b;"><a href="{_data.id|jump}">编辑</a></p>
+                                    </div>
+                                </div>
+                                <div style="width: 100%; margin: 20px 0 0 0 ;" class='mycontent'>
+                                    {_data.content|htmlspecialchars_decode}
+                                </div>
+                            </div>
+                            <div class="resery-friend-body" style="min-height: 50px; margin-bottom: 10px;padding: 20px;background: #292429;overflow:hidden;">
+                                <div style="width: 100%;height: 35px;margin-bottom: 10px;">
+<!--                                    <div class="pull-left" style="height: 35px;width: 35px;display: block;background: #FFFFFF;border-radius: 4px;"></div>
+                                        <ul class="pull-left">
+                                            <li class="pull-left" style="height: 35px;width: 35px; margin-left: 10px;border-radius: 4px;background: #FFFFFF;"></li>
+                                            <li class="pull-left" style="height: 35px;width: 35px; margin-left: 10px;border-radius: 4px;background: #FFFFFF;"></li>
+                                            <li class="pull-left" style="height: 35px;width: 35px; margin-left: 10px;border-radius: 4px;background: #FFFFFF;"></li>
+                                        </ul>-->
+                                     已阅<a href='javascript:;' style='cursor: pointer;' readlist='{_data.id}'>{_data.readeds}</a>人 未阅<a href='javascript:;' style='cursor: pointer;' unreadlist='{_data.id}'>{_data.unreads}</a>人
+                                    </div>
+                                <jsvolist2 name="_data.comment_list" id="_comment">
+                                    <ul style="overflow:hidden;">
+                                    <li>
+                                        <div class="pull-left" style="width: 35px;height: 35px;">
+                                            <img src="{_comment.minfo.headerurl}" style="width: 35px;height: 35px;border-radius: 4px;" alt="">
+                                        </div>
+                                        <div class="pull-left" style="padding-left: 10px;height: 35px;margin-bottom: 15px;">
+                                            <h2 style="font-size: 12px;margin: 0;color: #a6a6a6; height: 20px;line-height: 14px;"><a href="javascript:;" reply="{_comment.id}" homework_id="{_comment.homework_id}" style="color: #FFFFFF;cursor: pointer;" replynameid='{_comment.id}'>{_comment.minfo.real_name}</a> : {_comment.content}</h2>
+                                            <p style="font-size: 12px;color: #6b6b6b; margin: 0;line-height: 15px;height: 17px;" class="pull-left">{_comment.addtime|date2}</p>
+                                            <a href="javascript:;" reply="{_comment.id}" homework_id="{_comment.homework_id}" style="height: 14px;width: 14px; margin-left: 10px;" class="pull-left"><img src='/Public/Admin/images/huifuxiaoxi.png' style='width:14px;height:14px;cursor: pointer;' title='回复'/></a>
+                                        </div>
+                                        <div style="clear:both; padding-left: 45px;margin-bottom: 10px;">
+                                            <ul>
+                                                <jsvolist3 name="_comment.replyinfo" id="_replyinfo">
+                                                <li style="height: 35px;overflow:hidden;clear:both; margin-bottom: 15px;">
+                                                    <div class="pull-left" style="width: 35px;height: 35px;">
+                                                        <img src="{_replyinfo.minfo.headerurl}" style="width: 35px;height: 35px;border-radius: 4px;" alt="">
+                                                    </div>
+                                                    <div class="pull-left" style="padding-left: 10px;height: 35px;">
+                                                        <h2 style="font-size: 12px;margin: 0;color: #a6a6a6; height: 20px;line-height: 14px;"><a href="javascript:;" reply="{_replyinfo.id}" homework_id="{_replyinfo.homework_id}" style="color: #FFFFFF;cursor: pointer;" replynameid='{_replyinfo.id}'>{_replyinfo.minfo.real_name}</a><span style="margin: 0 5px;">回复</span><a href="javascript:;" style="color: #FFFFFF;">{_replyinfo.rminfo.real_name}</a> : {_replyinfo.content}</h2>
+                                                        <p style="font-size: 12px;color: #6b6b6b; margin: 0;line-height: 15px;height: 17px;" class="pull-left">{_replyinfo.addtime|date2}</p>
+                                                        <a href="javascript:;" reply="{_replyinfo.id}" homework_id="{_replyinfo.homework_id}" style="height: 14px;width: 14px; margin-left: 10px;" class="pull-left">
+                                                            <img src='/Public/Admin/images/huifuxiaoxi.png' style='width:14px;height:14px;cursor: pointer;'  title='回复'/>
+                                                        </a>
+                                                        
+                                                    </div>
+                                                </li>
+                                                </jsvolist3>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                                </jsvolist2>
+                                <form addcomment="{_data.id}">
+                                <div style="width: 100%; height: 30px;line-height: 30px;">
+                                    <input class="pull-left" name="content" type="text" reply_homework_id='{_data.id}' placeholder="我也说一句" style="color:#a6a6a6;width: 90%; background: #312c31;border:1px solid #212021;padding: 0 10px;">
+                                    <button class="pull-left" style="width: 10%;height: 32px;line-height: 32px;background:#312c31;border:1px solid #212021;padding: 0 10px;border-left: none;font-size: 14px;text-align: center;cursor:pointer;" type="submit">发表</button>
+                                </div>
+                                    <input type="hidden" name="id" value="{_data.id}"/>
+                                    <input type="hidden" name="reply_id" id="reply_id{_data.id}" value=""/>
+                                    <input type="hidden" name="act" value="addHomeworkComment"/>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>       
+            </jsvolist>
+            </div>
+            <a href="javascript:;" id="next">下一页</a>
+        </div>
+    </div>
+</div>
+<div class="modal fade in" id="unreadModal" tabindex="-1" role="dialog" aria-labelledby="newFoodLabel">
+    <div class="modal-dialog watch-modal-box" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="newFoodLabel">未读列表</h4>
+            </div>
+            <div class="modal-body state-modal">
+                <table class="insert-tab" style="width:100%">
+                    <thead>
+                        <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-center">序号</th>
+                            <th class="col-lg-5 col-md-5  col-sm-5  col-xs-5 text-center">姓名</th>
+                            <th class="col-lg-5 col-md-5  col-sm-5  col-xs-5 text-center">电话</th>
+                        </tr>
+                    </thead>
+                    <tbody id="unreadlisttbody">
+                        <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                            <td class="col-lg-2 col-md-2  col-sm-2  col-xs-2">{xh}</td>
+                            <td class="col-lg-5 col-md-5  col-sm-5  col-xs-5">{name}</td>
+                            <td class="col-lg-5 col-md-5  col-sm-5  col-xs-5">{phone}</td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade in" id="readModal" tabindex="-1" role="dialog" aria-labelledby="newFoodLabel">
+    <div class="modal-dialog watch-modal-box" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="newFoodLabel">已读列表</h4>
+            </div>
+            <div class="modal-body state-modal">
+                <table class="insert-tab" style="width:100%">
+                    <thead>
+                        <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-center">序号</th>
+                            <th class="col-lg-5 col-md-5  col-sm-5  col-xs-5 text-center">姓名</th>
+                            <th class="col-lg-5 col-md-5  col-sm-5  col-xs-5 text-center">电话</th>
+                        </tr>
+                    </thead>
+                    <tbody id="readlisttbody">
+                        <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                            <td class="col-lg-2 col-md-2  col-sm-2  col-xs-2">{xh}</td>
+                            <td class="col-lg-5 col-md-5  col-sm-5  col-xs-5">{name}</td>
+                            <td class="col-lg-5 col-md-5  col-sm-5  col-xs-5">{phone}</td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var getdata2homeworkid=0;
+    var loadingdata=false;
+    $(document).ready(function(){
+        $(document).scroll(function(){            
+            if($("#next").offset() && $("#next").offset().top<$(document).scrollTop()+$(window).height())
+            {
+                $("#next").html('加载中...');
+                loadingdata=true;
+                getdata(++p);
+                $("#next").html('下一页');                
+            }        
+        });
+        
+        $(document).on('click',"[reply]",function(){
+            var reply_id=$(this).attr('reply');
+            var homework_id=$(this).attr('homework_id');
+            $("#reply_id"+homework_id).val(reply_id);
+            var replyname=$("[replynameid="+reply_id+"]").html();
+            $("[reply_homework_id="+homework_id+"]").attr('placeholder','@'+replyname);
+            $("html,body").animate({scrollTop:$("[reply_homework_id="+homework_id+"]").offset().top-$(window).height()/2},500);
+            $("[reply_homework_id="+homework_id+"]").focus();
+            $("[reply_homework_id="+homework_id+"]").blur(function(){
+                if($("[reply_homework_id="+homework_id+"]").val()=='')
+                {
+                    $("#reply_id"+homework_id).val('');
+                    $("[reply_homework_id="+homework_id+"]").attr('placeholder','我也说一句');
+                }
+            });
+        });
+        $(document).on('click',"[readlist]",function(){
+            var homework_id=$(this).attr('readlist');
+            if(getdata2homeworkid!=homework_id)
+            {
+                getdata2(homework_id);
+            }
+            $("#readModal").modal('show');
+        });
+        $(document).on('click',"[unreadlist]",function(){
+            var homework_id=$(this).attr('unreadlist');            
+            if(getdata2homeworkid!=homework_id)
+            {
+                getdata2(homework_id);
+            }
+            $("#unreadModal").modal('show');
+        });
+        $(document).on('submit',"[addcomment]",function(){
+            var fdata=$(this).serialize();
+            $.post("{:U('apiqingqiu')}",fdata,function(data){
+                if(data.status!=1)
+                {
+                    myalert(data.info);
+                    return false;
+                }
+                if(data.info.status!=1)
+                {
+                    myalert(data.info.msg);
+                    return false;
+                }
+            },'json');
+            return false;
+       });
+    });
+    var date2=function (d)   {  
+        var   now=new   Date(d*1000);  
+        var   year=now.getFullYear();     
+        var   month=now.getMonth()+1;     
+        var   date=now.getDate();
+        var   hour=now.getHours();
+        var   minute=now.getMinutes();
+        var   second=now.getSeconds();     
+        return   year+"-"+(month<10?'0'+month:month)+"-"+(date<10?'0'+date:date)+"   "+(hour<10?'0'+hour:hour)+":"+(minute<10?'0'+minute:minute)+":"+(second<10?'0'+second:second);
+    };
+    var htmlspecialchars_decode=function (str)   {  
+        str = str.replace(/&amp;/g, '&'); 
+        str = str.replace(/&lt;/g, '<');
+        str = str.replace(/&gt;/g, '>');
+        str = str.replace(/&quot;/g, "''");  
+        str = str.replace(/&#039;/g, "'");  
+        return str;  
+    };
+    var jump = function(id){
+        return "{:U('Index/history_zuoye')}?id="+id;
+    };
+    var jsvolist=$("jsvolist").html();   
+    var jsvolist2=$("jsvolist2").html();   
+    var jsvolist3=$("jsvolist3").html();  
+    var readlisttbody=$("#readlisttbody").html();
+    var unreadlisttbody=$("#unreadlisttbody").html();
+    var loaddata=[];
+    var p=1;
+    var getdata=function(p,gettype){
+        if(gettype===undefined)
+        {
+            gettype='nowpage';
+        }
+        if(gettype==='nowpage')
+        {
+        $.post("{:U('apiqingqiu')}",{act:'mySendHomeworkList',token:"{:session('token')}",p:p},function(returndata){
+            if(returndata.status==1)
+            {
+                if(returndata.info.msg.data)
+                {
+                    loaddata[p]=returndata.info.msg.data;
+                    xuanran();
+                    $("#content").show();
+                }
+                else
+                {
+                        --p;
+                    $("#next").remove();
+                }
+            }
+            else
+            {
+                myalert(returndata.info);
+            }
+            loadingdata=false;
+        },'json');
+        }
+        else
+        {
+//          合并请求
+            $.post("{:U('apiqingqiu')}",{act:'mySendHomeworkList',token:"{:session('token')}",p:p,gettype:gettype},function(returndata){
+                if(returndata.status==1)
+                {
+                    if(returndata.info.msg.data)
+                    {
+                        loaddata=returndata.info.msg.data;
+                        xuanran();
+                        $("#content").show();
+                    }
+                }
+                else
+                {
+                    myalert(returndata.info);
+                }
+            },'json');
+        }
+    };
+    var face_callback=function($1){
+      var expression = [
+        {"index": "1", "value": "微笑"},
+        {"index": "2", "value": "撇嘴"},
+        {"index": "3", "value": "色"},
+        {"index": "4", "value": "发呆"},
+        {"index": "5", "value": "流泪"},
+        {"index": "6", "value": "害羞"},
+        {"index": "7", "value": "闭嘴"},
+        {"index": "8", "value": "睡"},
+        {"index": "9", "value": "大哭"},
+        {"index": "10", "value": "尴尬"},
+        {"index": "11", "value": "发怒"},
+        {"index": "12", "value": "调皮"},
+        {"index": "13", "value": "呲牙"},
+        {"index": "14", "value": "惊讶"},
+        {"index": "15", "value": "难过"},
+        {"index": "16", "value": "冷汗"},
+        {"index": "17", "value": "抓狂"},
+        {"index": "18", "value": "吐"},
+        {"index": "19", "value": "偷笑"},
+        {"index": "20", "value": "可爱"},
+        {"index": "21", "value": "白眼"},
+        {"index": "22", "value": "傲慢"},
+        {"index": "23", "value": "饥饿"},
+        {"index": "24", "value": "困"},
+        {"index": "25", "value": "惊恐"},
+        {"index": "26", "value": "流汗"},
+        {"index": "27", "value": "憨笑"},
+        {"index": "28", "value": "大兵"},
+        {"index": "29", "value": "奋斗"},
+        {"index": "30", "value": "咒骂"},
+        {"index": "31", "value": "疑问"},
+        {"index": "32", "value": "嘘"},
+        {"index": "33", "value": "晕"},
+        {"index": "34", "value": "衰"},
+        {"index": "35", "value": "敲打"},
+        {"index": "36", "value": "再见"},
+        {"index": "37", "value": "擦汗"},
+        {"index": "38", "value": "抠鼻"},
+        {"index": "39", "value": "糗大了"},
+        {"index": "40", "value": "坏笑"},
+        {"index": "41", "value": "左哼哼"},
+        {"index": "42", "value": "右哼哼"},
+        {"index": "43", "value": "哈欠"},
+        {"index": "44", "value": "鄙视"},
+        {"index": "45", "value": "委屈"},
+        {"index": "46", "value": "快哭了"},
+        {"index": "47", "value": "阴险"},
+        {"index": "48", "value": "亲亲"},
+        {"index": "49", "value": "吓"},
+        {"index": "50", "value": "可怜"},
+        {"index": "51", "value": "抱抱"},
+        {"index": "52", "value": "月亮"},
+        {"index": "53", "value": "太阳"},
+        {"index": "54", "value": "炸弹"},
+        {"index": "55", "value": "骷髅"},
+        {"index": "56", "value": "菜刀"},
+        {"index": "57", "value": "猪头"},
+        {"index": "58", "value": "西瓜"},
+        {"index": "59", "value": "咖啡"},
+        {"index": "60", "value": "饭"},
+        {"index": "61", "value": "爱心"},
+        {"index": "62", "value": "强"},
+        {"index": "63", "value": "弱"},
+        {"index": "64", "value": "握手"},
+        {"index": "65", "value": "胜利"},
+        {"index": "66", "value": "抱拳"},
+        {"index": "67", "value": "勾引"},
+        {"index": "68", "value": "好得"},
+        {"index": "69", "value": "不要"},
+        {"index": "70", "value": "玫瑰"},
+        {"index": "71", "value": "凋谢"},
+        {"index": "72", "value": "示爱"},
+        {"index": "73", "value": "左太极"},
+        {"index": "74", "value": "爱情"},
+        {"index": "75", "value": "飞吻"},
+        {"index": "76", "value": "礼物"},
+        {"index": "77", "value": "转圈"},
+        {"index": "78", "value": "拳头"},
+        {"index": "79", "value": "差劲"},
+        {"index": "80", "value": "爱你"},
+        {"index": "81", "value": "右太极"},
+        {"index": "82", "value": "跳跳"},
+        {"index": "83", "value": "发抖"},
+        {"index": "84", "value": "怄火"},
+        {"index": "85", "value": "回头"},
+        {"index": "86", "value": "跳绳"},
+        {"index": "87", "value": "挥手"},
+        {"index": "88", "value": "激动"},
+        {"index": "89", "value": "街舞"},
+        {"index": "90", "value": "献吻"}];
+      var len = expression.length;
+      for (var _this in expression) {
+        if ($1 == '[' + expression[_this].value + ']') {
+          var i = parseInt(_this) + 1;
+          return '<img src="/www/img/arclist/' + i + '.gif" title="' + expression[i - 1].value + '">';
+        }
+      }
+      return '';
+    };
+    var xuanran=function()
+    {
+        var i=1;
+        var html='';  
+        //第一层循环的html          
+        for(list in loaddata)
+        {
+            var list=loaddata[i];       
+            $(list).each(function(){
+                var data=$(this);
+                var replaces = jsvolist.replace(/{_data.(\w+)}/g, function($1,$2){
+                    return data.attr($2);
+                }).replace(/{_data.(\w+)\|(\w+)}/g,function($1,$2,$3){
+                    return window[$3](data.attr($2));
+                }).replace(/{_data.(\w+)\.(\w+)}/g,function($1,$2,$3){
+                    return data[0][$2][$3];
+                }).replace(/\[[\u4e00-\u9fa5]*\]/g,function($1){return face_callback($1);});
+                var sprnstr2 = "<jsvolist2";
+                var eprnstr2 = "</jsvolist2>";
+                var lhtml2 = replaces.substr(0,replaces.indexOf(sprnstr2));
+                var rhtml2 = replaces.substr(replaces.indexOf(eprnstr2)+12);
+                var replaces2='';
+                $(data.attr('comment_list')).each(function(){
+                    var comment=$(this);
+                    replaces2 += jsvolist2.replace(/{_comment.(\w+)}/g, function($1,$2){
+                        return comment.attr($2);
+                    }).replace(/{_comment.(\w+)\|(\w+)}/g,function($1,$2,$3){
+                        return window[$3](comment.attr($2));
+                    }).replace(/{_comment.(\w+)\.(\w+)}/g,function($1,$2,$3){
+                        return comment[0][$2][$3];
+                    }).replace(/\[[\u4e00-\u9fa5]*\]/g,function($1){return face_callback($1);});
+                    var sprnstr3 = "<jsvolist3";
+                    var eprnstr3 = "</jsvolist3>";
+                    var lhtml3 = replaces2.substr(0,replaces2.indexOf(sprnstr3));
+                    var rhtml3 = replaces2.substr(replaces2.indexOf(eprnstr3)+12);
+                    var replaces3='';
+                    $(comment.attr('replyinfo')).each(function(){
+                        var replyinfo=$(this);
+                        replaces3 += jsvolist3.replace(/{_replyinfo.(\w+)}/g, function($1,$2){
+                            return replyinfo.attr($2);
+                        }).replace(/{_replyinfo.(\w+)\|(\w+)}/g,function($1,$2,$3){
+                            return window[$3](replyinfo.attr($2));
+                        }).replace(/{_replyinfo.(\w+)\.(\w+)}/g,function($1,$2,$3){
+                            return replyinfo[0][$2][$3];
+                        }).replace(/\[[\u4e00-\u9fa5]*\]/g,function($1){return face_callback($1);});
+                    });
+                    replaces2=lhtml3+replaces3+rhtml3;
+                });
+                replaces=lhtml2+replaces2+rhtml2;
+                html+=replaces;
+            });
+            ++i;
+        }        
+        $("#content").html(html);
+    };
+    getdata(1);
+    var getdata2=function(homework_id){
+        $.post("{:U('apiqingqiu')}",{act:'openHomework',token:"{:session('token')}",id:homework_id},function(returndata){
+            if(returndata.status==1)
+            {
+                var tbody='';           
+                var xh=0;
+                $(returndata.info.msg.unreadlist).each(function(){
+                    var list = $(this);
+                    tbody+= unreadlisttbody.replace(/{xh}/g,++xh).replace(/{name}/g,list[0]['real_name']).replace(/{phone}/g,list[0]['phone']);
+                });
+                $("#unreadlisttbody").html(tbody);
+                var tbody='';           
+                var xh=0;
+                $(returndata.info.msg.readlist).each(function(){
+                    var list = $(this);
+                    tbody+= readlisttbody.replace(/{xh}/g,++xh).replace(/{name}/g,list[0]['real_name']).replace(/{phone}/g,list[0]['phone']);
+                });
+                $("#readlisttbody").html(tbody);
+                getdata2homeworkid=homework_id;            
+            }
+            else
+            {
+                myalert(returndata.info);
+            }
+        },'json');
+    };
+    WebSocketcallback=function(json){
+        if(json.msgtype==='change' && false!==json.interfaces.indexOf('mySendHomeworkList'))
+        {
+            {
+                getdata(p,'before');
+            }
+        }
+    };
+</script>

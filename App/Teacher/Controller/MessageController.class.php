@@ -1,0 +1,1 @@
+<?phpnamespace Teacher\Controller;class MessageController extends CommonController {    public function apiqingqiu() {        $act = I("act");        $data = I();        $data['token'] = session('token');        $return = $this->getdata($act, $data);        $this->success($return);    }    public function index()    {        $this->display();    }}

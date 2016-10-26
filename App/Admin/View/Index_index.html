@@ -1,0 +1,124 @@
+<div class="page-container">
+    <include file="Public:nav" />
+    <div class="page-Ri">
+        <div class="container-fluid">
+            <include file="Public:page-header" />             
+            <include file="Public:subnav" />
+            <button class="btn btn-primary pull-left" data-toggle="modal" data-target="#Modal">新增</button>
+<!--            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-bottom:20px; margin-left: 40px;">
+                <p class="col-lg-2 col-md-2 col-sm-3 col-xs-3" style="font-size: 14px;height: 34px;line-height: 34px; padding-left: 0; padding-right: 0;">关键字 ：</p>
+                <form>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="关键字" name="keywords" value="{$keywords}">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">查询</button>
+                      </span>
+                </div>
+                </form>
+            </div>-->
+
+            <table class="table table-hover table-bordered page-table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody class="page-active">
+                <volist name="list" id="data">
+                <tr>
+                    <td>{$i}</td>
+                    <td>{$data.name}</td>
+                    <td><a data-toggle="modal" data-target="#Modal{$data.id}">查看</a></td>
+                 </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<form myform action="{:U('area_add')}">
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="weixinLabel" style="width: 800px; margin: auto">
+    <div class="modal-dialog" role="document" style="width: 800px;top: 0;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="weixinLabel">添加区域</h4>
+            </div>
+            <div class="modal-body has-modal">
+                <table class="insert-tab">
+                    <tbody>
+                    <tr class="col-lg-12" style="padding-left: 10px;margin: 20px 0;">
+                        <th style="height: 34px;line-height: 34px; padding-right: 0;" class="col-lg-3 text-right"> 名称 ：</th>
+                        <td class="col-lg-9">
+                            <div><input type="text" class="form-control pull-left col-lg-12" style="width: 100%;" name='name'>
+                            </div>
+                            <!--<span style="display: block;float:left; height: 34px;line-height: 34px;">微信公众号名称</span>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                <button type="submit" class="btn btn-primary"> 确认添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<volist name="list" id="data">
+<form myform="{$data.id}" action="{:U('area_add')}">
+<div class="modal fade" id="Modal{$data.id}" tabindex="-1" role="dialog" aria-labelledby="weixinLabel">
+    <div class="modal-dialog" role="document" style="width: 800px;top: 0;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="weixinLabel">编辑区域</h4>
+            </div>
+            <div class="modal-body has-modal">
+                <table class="insert-tab">
+                    <tbody>
+                    <tr class="col-lg-12" style="padding-left: 10px;margin: 20px 0;">
+                        <th style="height: 34px;line-height: 34px; padding-right: 0;" class="col-lg-3 text-right"> 名称 ：</th>
+                        <td class="col-lg-9">
+                            <div><input type="text" class="form-control pull-left col-lg-12" style="width: 100%;" name='name' value="{$data.name}">
+                            </div>
+                            <!--<span style="display: block;float:left; height: 34px;line-height: 34px;">微信公众号名称</span>-->
+                        </td>
+                    </tr>                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                <button type="submit" class="btn btn-primary"> 修改</button>
+                <input type="hidden" name='id' value='{$data.id}'>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</volist>
+<script>
+    $("[myform]").submit(function(){
+        var fdata=$(this).serialize();
+        var id = $(this).attr("myform");
+        $.post($(this).attr('action'),fdata,function(data){
+            if(0==data.status)
+            {
+                myalert(data.info);
+                return false;
+            }
+            myalert(data.info);
+            $("#Modal"+id).modal('hide');
+            location.reload() 
+            
+        },'json');        
+        return false;
+    });
+</script>

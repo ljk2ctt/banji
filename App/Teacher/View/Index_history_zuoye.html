@@ -1,0 +1,140 @@
+<div class="page-container">
+    <include file="Public:nav" />
+    <div class="page-Ri">
+        <div class="container-fluid">
+            <include file="Public:page-header" />
+            <include file="Public:subnav" />
+            <form id='addform' action="{:U('')}" method="post">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0 20px 0 0;">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                         style="padding: 0;line-height: 34px;margin-bottom: 10px">
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+
+                    <table class="insert-tab">
+                        <tbody>
+
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style='margin: 10px 0px'>
+                                <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right" style='width:200px'> 作业标题 ：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name='title' value="{$info.title}" readonly="readonly">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right" style='width:200px'> 作业内容：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <script id="container" name="desc" type="text/plain" style="width:940px;">{$info.content|htmlspecialchars_decode}</script>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style='margin: 10px 0px'>
+                                <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right" style='width:200px'> 上传附件 ：</th>
+                                 <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div id="inputbox">
+                                        <foreach name="info.pic_arr" item="vo" key="k">
+                                            <div style="margin:10px 0px;width:500px;overflow: hidden;" >
+                                                <input type="text" class="form-control pull-left pushList-image" name="pics[]" style="width: 70%;" value="{$vo}" id="a{$k}">
+                                                <div style="width: 30%;overflow: hidden;">  
+                                                    <input type="button" value="预览" class="btn btn-default pull-right" style="margin-left: 10px;" preview="a{$k}"/><input type="button" value="删除" style="margin-left:10px;" class="btn btn-default schu pull-right">
+                                                </div>
+                                            </div>
+                                        </foreach>
+                                        <div style="margin:10px 0px;width:500px;overflow: hidden;" id="firbox">
+                                            <input type="text" class="form-control pull-left pushList-image" name="pics[]" style="width: 70%;" id="addpic">
+                                            <div style="width: 30%;overflow: hidden;">  
+                                                <input type="button" value="预览" class="btn btn-default pull-right" style="margin-left: 10px;" preview='addpic'/><input type="button" value="删除" style="margin-left:10px;" class="btn btn-default schu pull-right">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin:10px 0px;width:500px;overflow: hidden;">
+                                        <input type="text" class="form-control pull-left pushList-image" name="pics[]" style="width: 70%;opacity:0;" id="addpic">
+                                        <div style="width: 30%;overflow: hidden;">  
+                                            <input type="button" value="上传" id="shangchuan" class="btn btn-default dianji pull-right" style="margin-left: 210px" oo="addpic"/>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id='tijiao'> 提交</button>
+                </div>
+                <input name='id' value="{$id}" type='hidden'  />
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/Public/ueditor/ueditor.config.js"></script>
+
+<!-- 编辑器源码文件 -->
+
+<script type="text/javascript" src="/Public/ueditor/ueditor.all.js">
+
+</script>
+
+<!-- 实例化编辑器 -->
+
+<script type="text/javascript">
+    $(document).on("click", ".dianji", function () {
+        var oo = $(this).attr("oo");
+        myupload(oo);
+    })
+    $(document).on("click", ".schu", function () {
+        var val = $(this).parent().parent().find("input").eq(0).val();
+        if (val == "") {
+            return false;
+        }
+        $(this).parent().parent().remove();
+
+
+    })
+
+    $(".select li a").click(function () {
+        var word = $(this).html();
+        var val = $(this).attr('val');
+
+        $(this).parent().parent().parent().children('button').html(word);
+        $(this).parent().parent().parent().children('[type=hidden]').val(val);
+
+    });
+    function fsubmit() {
+        var data = new FormData($('#addform')[0]);
+
+        $.ajax({
+            url: "{:U('upload')}",
+            type: 'POST',
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (e) {
+                if (e.status == 1) {
+                    var html = " <div style='float: left'><img src='" + e.info.thumb_src + "' class='photo' style='width:50px;height:50px'><span class='del'>x</span></div>"
+                    // var html="<img src='"+e.info.thumb_src+"' style='width:50px;height:50px'>" 
+                    $("#picbox").append(html);
+                    var pics = $("#pics").val();
+                    if (pics == "") {
+                        pics = e.info.original_src;
+                    } else {
+                        pics += "," + e.info.original_src;
+                    }
+                    $("#pics").val(pics);
+                } else {
+                    alert("上传失败")
+                }
+            }
+
+        })
+    }
+</script>
+<script type="text/javascript">
+    var editor = UE.getEditor('container');
+
+    editor.setWidth(580);
+</script>
+<script src="{:U('Home/Upload/js')}"></script>
+<script type="text/javascript" src="/Public/artDialog/jquery.artDialog.js?skin=idialog"></script>

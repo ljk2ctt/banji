@@ -1,0 +1,636 @@
+<div class="page-container">
+    <include file="Public:nav" />
+    <div class="page-Ri">
+        <div class="container-fluid">
+            <include file="Public:page-header" />
+            <include file="Public:subnav" />
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0 20px 0 0;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                     style="padding: 0;line-height: 34px;margin-bottom: 10px">
+                    <div class="pull-right">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#newModal">新增</button>
+                    </div>
+                </div>
+                <table class="table table-hover table-bordered page-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>手机号</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="page-active" id="tbody">
+                    <volist name='list' id='data'>
+                        <tr>
+                            <td>{$i}</td>
+                            <td>{$data.real_name}</td>  
+                            <td><if condition="$data['sex'] eq 0">男<else />女</if></td>
+                        <td>{$data.phone}</td>  
+
+                        <td><a href='javascript:;' edit='{$data.id}'>查看</a><a href='javascript:;' del='{$data.id}'>删除</a><a href='javascript:;' renke='{$data.id}'>任课</a>
+                        </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新增分类  newFoodModal -->
+<form id="addform" method="post" enctype="multipart/form-data">
+    <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newFoodLabel">
+        <div class="modal-dialog watch-modal-box" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newFoodLabel">新增</h4>
+                </div>
+                <div class="modal-body state-modal">
+                    <table class="insert-tab">
+                        <tbody>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">名称：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="real_name" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">手机：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="phone" >
+                                    </div>
+                                </td>
+                            </tr>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">昵称：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="nickname" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">email：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="email" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">性别：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div> <input type="radio" name="sex"  value="0">男 <input type="radio"  name="sex" value="1">女
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">是否是班主任：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div>  <input type="radio" name="banzhuren" value="1" >是 <input type="radio" name="banzhuren" value="2" >否
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 班级 ：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="downMenu"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            请选择
+                                            <span class="caret"></span>
+                                        </button>
+                                        <input type="hidden" name="cid" id="addschool_id"/>
+                                        <ul class="dropdown-menu select" aria-labelledby="downMenu">
+                                            <volist name="class" id="data2">
+                                                <li><a href="javascript:;" val="{$data2.id}">{$data2.grade}-{$data2.name}</a></li>
+                                            </volist>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">头像：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="file" name="file0" id="file0" multiple="multiple" /><br><img width="100px" height="100px" src="" id="img0" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"></th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="button" name="b1" value="上传" onclick="fsubmit()"><input type="text" value="" id="src" name="headerurl">
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button type="submit" class="btn btn-primary"> 提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<!-- 查看  newFoodModal -->
+<form id="editform" method="post" enctype="multipart/form-data">
+    <div class="modal fade" id="newModal1" tabindex="-1" role="dialog" aria-labelledby="newFoodLabel1">
+        <div class="modal-dialog watch-modal-box" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newFoodLabel">新增</h4>
+                </div>
+                <div class="modal-body state-modal">
+                    <table class="insert-tab">
+                        <tbody>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">名称：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="real_name" id="real_name" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">手机：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="phone" id="phone" >
+                                    </div>
+                                </td>
+                            </tr>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">昵称：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="nickname" id="nickname" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">email：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="email" id="email">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">性别：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div> <input type="radio" name="sex"  value="0" id="sex_nan">男 <input type="radio"  name="sex" value="1" id="sex_nv">女
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">是否是班主任：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div>  <input type="radio" name="banzhuren" value="1" id="banzhuren_shi">是 <input type="radio" name="banzhuren" value="2" id="banzhuren_fou">否
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 班级 ：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="downMenu1"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            请选择
+                                            <span class="caret"></span>
+                                        </button>
+                                        <input type="hidden" name="cid" id="cid"/>
+                                        <ul class="dropdown-menu select" aria-labelledby="downMenu">
+                                            <volist name="class" id="data2">
+                                                <li><a href="javascript:;" val="{$data2.id}">{$data2.grade}-{$data2.name}</a></li>
+                                            </volist>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">头像：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="file" name="file0" id="file1" multiple="multiple" /><br><img width="100px" height="100px" src="" id="img1" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"></th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="button" name="b1" value="上传" onclick="fsubmit1()"><input type="text" value="" id="src1" name="headerurl">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button type="submit" class="btn btn-primary"> 提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="" id="mid">
+</form>
+<!-- 查看  newFoodModal -->
+<form id="renkeform" method="post" enctype="multipart/form-data">
+    <div class="modal fade" id="newModal2" tabindex="-1" role="dialog" aria-labelledby="newFoodLabel2">
+        <div class="modal-dialog watch-modal-box" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newFoodLabel">任课</h4>
+                </div>
+                <div class="modal-body state-modal">
+                    <table class="insert-tab">
+                        <tbody id="tss">
+                            <!--                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">名称：</th>
+                                                            <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                                                <div><input type="text" class="form-control pull-left" style="width: 100%;" name="real_name" id="real_name1" >
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 班级 ：</th>
+                                                            <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-default dropdown-toggle" type="button" id="downMenu2"
+                                                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                                        请选择
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <input type="hidden" name="cid" id="cid"/>
+                                                                    <ul class="dropdown-menu select" aria-labelledby="downMenu">
+                                                                        <volist name="class" id="data2">
+                                                                            <li><a href="javascript:;" val="{$data2.id}">{$data2.grade}-{$data2.name}</a></li>
+                                                                        </volist>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 课程 ：</th>
+                                                            <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-default dropdown-toggle" type="button" id="downMenu3"
+                                                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                                        请选择
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <input type="hidden" name="cid" id="cid"/>
+                                                                    <ul class="dropdown-menu select" aria-labelledby="downMenu">
+                                                                        <volist name="class" id="data2">
+                                                                            <li><a href="javascript:;" val="{$data2.id}">{$data2.grade}-{$data2.name}</a></li>
+                                                                        </volist>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>-->
+
+                            <tr id="dingwei"></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button type="submit" class="btn btn-primary"> 提交</button>
+                    <button type="button" class="btn btn-primary" id="zj"> 增加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="" id="mmid">
+</form>
+<table>
+
+    <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 banji" style="display: none">
+        <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 班级 ：</th>
+        <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="downMenu2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    请选择
+                    <span class="caret"></span>
+                </button>
+                <input type="hidden" name="cid[]" />
+                <ul class="dropdown-menu select" aria-labelledby="downMenu">
+                    <volist name="class" id="data2">
+                        <li><a href="javascript:;" val="{$data2.id}">{$data2.grade}-{$data2.name}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 banji" style="display: none">
+        <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 课程 ：</th>
+        <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="downMenu3"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    请选择
+                    <span class="caret"></span>
+                </button>
+                <input type="hidden" name="subject[]" />
+                <ul class="dropdown-menu select" aria-labelledby="downMenu">
+                    <volist name="kecheng" id="data2">
+                        <li><a href="javascript:;" val="{$data2.id}">{$data2.name}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </td>
+    </tr>  
+</table>
+<script>
+    $(document).ready(function () {
+        $("#zj").click(function () {
+            var bj = $(".banji").clone();
+
+            bj.insertBefore("#dingwei");
+
+            $("#tss tr").removeClass("banji");
+            $("#tss tr").attr("style", "");
+        })
+        $(".select li a").click(function () {
+            var word = $(this).html();
+            var val = $(this).attr('val');
+            $(this).parent().parent().parent().children('button').html(word);
+            $(this).parent().parent().parent().children('[type=hidden]').val(val);
+        });
+        $(document).on("click", ".select li a", function () {
+            var word = $(this).html();
+            var val = $(this).attr('val');
+            $(this).parent().parent().parent().children('button').html(word);
+            $(this).parent().parent().parent().children('[type=hidden]').val(val);
+        })
+        $("#addform").submit(function () {
+            var fdata = $(this).serialize();
+            $.post("{:U('teacheradd')}", fdata, function (data) {
+                if (data.status == 0)
+                {
+                    myalert(data.info);
+                    return false;
+                }
+                $("#newModal").modal('hide');
+                location.reload();
+            }, 'json');
+            return false;
+        });
+        $("#editform").submit(function () {
+            var fdata = $(this).serialize();
+            $.post("{:U('teacheradd')}", fdata, function (data) {
+                if (data.status == 0)
+                {
+                    myalert(data.info);
+                    return false;
+                }
+                $("#newModal1").modal('hide');
+                location.reload();
+            }, 'json');
+            return false;
+        });
+        $("#renkeform").submit(function () {
+            var fdata = $(this).serialize();
+            $.post("{:U('renkeadd')}", fdata, function (data) {
+                if (data.status == 0)
+                {
+                    myalert(data.info);
+                    return false;
+                }
+                $("#newModal2").modal('hide');
+                location.reload();
+            }, 'json');
+            return false;
+        });
+        $(document).on('click', "[edit]", function () {
+
+            $.post("{:U('teacher_show')}", {id: $(this).attr('edit')}, function (data) {
+                if (data.status == 0)
+                {
+                    myalert(data.info);
+                    return false;
+                }
+                $("#real_name").val(data.info.real_name);
+                $("#phone").val(data.info.phone);
+                $("#nickname").val(data.info.nickname);
+                $("#email").val(data.info.email);
+                if (data.info.sex == 1) {
+                    $("#sex_nv").attr("checked", "checked");
+                } else {
+                    $("#sex_nan").attr("checked", "checked");
+                }
+                if (data.info.cid > 0) {
+                    $("#banzhuren_shi").attr("checked", "checked");
+                } else {
+                    $("#banzhuren_fou").attr("checked", "checked");
+                }
+
+                $("#cid").val(data.info.cid);
+                $("#downMenu1").html(data.info.cname);
+                $("#img1").attr("src", data.info.headerurl);
+                $("#src1").val(data.info.headerurl);
+                $("#mid").val(data.info.id);
+                $('#newModal1').modal('show');
+            }, 'json');
+        });
+        $('#newModal').on('hide.bs.modal', function () {
+            $("#addname").val('');
+            $("#addid").val('');
+            $("#addcode").val('');
+            $("#addschool_id").val('');
+            $("#downMenu").html('请选择');
+            $("#addgrade").val('');
+        });
+        $(document).on('click', "[del]", function () {
+            if (confirm("您确定要吗？"))
+            {
+                $.post("{:U('teacherdel')}", {id: $(this).attr('del')}, function (data) {
+                    if (data.status == 0)
+                    {
+                        myalert(data.info);
+                        return false;
+                    }
+                    location.reload();
+                }, 'json');
+            }
+        });
+        $(document).on("click", "[renke]", function () {
+            var id = $(this).attr("renke")
+            $.ajax({
+                type: "POST",
+                url: "{:U('renke')}",
+                data: {id: id},
+                success: function (e) {
+                    var html = "";
+                    html += '<tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">'
+                    html += '<th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">名称：</th>'
+                    html += '<td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">'
+                    html += '<div><input type="text" class="form-control pull-left" style="width: 100%;" name="real_name" value="' + e.info.member.real_name + '" >'
+                    html += '</div>'
+                    html += '</td>'
+                    html += '</tr>'
+                    if (e.info.access == null) {
+
+                        html += '<tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">'
+                        html += '<th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 班级 ：</th>'
+                        html += '<td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">'
+                        html += '<div class="dropdown">'
+                        html += '<button class="btn btn-default dropdown-toggle" type="button" id="downMenu2"'
+                        html += 'data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'
+                        html += "请选择"
+                        html += '<span class="caret"></span>'
+                        html += '</button>'
+                        html += '<input type="hidden" name="cid[]" value=""/>'
+                        html += '<ul class="dropdown-menu select" aria-labelledby="downMenu">'
+                        $(e.info.class).each(function (ii, xx) {
+                            html += '<li><a href="javascript:;" val="' + xx.id + '">' + xx.grade + "-" + xx.name + '</a></li>'
+                        })
+
+
+                        html += '</ul>'
+                        html += '</div>'
+                        html += '</td>'
+                        html += '</tr>'
+
+                        html += '<tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">'
+                        html += '<th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 课程 ：</th>'
+                        html += '<td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">'
+                        html += '<div class="dropdown">'
+                        html += '<button class="btn btn-default dropdown-toggle" type="button" id="downMenu3"'
+                        html += 'data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'
+                        html += "请选择"
+                        html += '<span class="caret"></span>'
+                        html += '</button>'
+                        html += '<input type="hidden" name="subject[]" />'
+                        html += '<ul class="dropdown-menu select" aria-labelledby="downMenu">'
+
+                        $(e.info.subject).each(function (iii, xxx) {
+                            html += '<li><a href="javascript:;" val="' + xxx.id + '">' + xxx.name + '</a></li>'
+                        })
+                        html += '</ul>'
+                        html += '</div>'
+                        html += '</td>'
+                        html += '</tr>'
+                        html += '<tr id="dingwei"></tr>'
+                    } else {
+                        $(e.info.access).each(function (i, x) {
+                            html += '<tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">'
+                            html += '<th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 班级 ：</th>'
+                            html += '<td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">'
+                            html += '<div class="dropdown">'
+                            html += '<button class="btn btn-default dropdown-toggle" type="button" id="downMenu2"'
+                            html += 'data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'
+                            html += x.classinfo.grade + "" + x.classinfo.name
+                            html += '<span class="caret"></span>'
+                            html += '</button>'
+                            html += '<input type="hidden" name="cid[]" value="' + x.class_id + '"/>'
+                            html += '<ul class="dropdown-menu select" aria-labelledby="downMenu">'
+                            $(e.info.class).each(function (ii, xx) {
+
+                                html += '<li><a href="javascript:;" val="' + xx.id + '">' + xx.grade + "-" + xx.name + '</a></li>'
+                            })
+
+
+                            html += '</ul>'
+                            html += '</div>'
+                            html += '</td>'
+                            html += '</tr>'
+
+                            html += '<tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">'
+                            html += '<th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 课程 ：</th>'
+                            html += '<td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">'
+                            html += '<div class="dropdown">'
+                            html += '<button class="btn btn-default dropdown-toggle" type="button" id="downMenu3"'
+                            html += 'data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'
+                            html += e.info.subject[x.subject_id - 1]["name"]
+                            html += '<span class="caret"></span>'
+                            html += '</button>'
+                            html += '<input type="hidden" name="subject[]" value="' + x.subject_id + '" />'
+                            html += '<ul class="dropdown-menu select" aria-labelledby="downMenu">'
+
+                            $(e.info.subject).each(function (iii, xxx) {
+                                html += '<li><a href="javascript:;" val="' + xxx.id + '">' + xxx.name + '</a></li>'
+                            })
+                            html += '</ul>'
+                            html += '</div>'
+                            html += '</td>'
+                            html += '</tr>'
+                            html += '<tr id="dingwei"></tr>'
+                        })
+                    }
+                    $("#mmid").val(e.info.member.id);
+                    $("#tss").html(html);
+
+                }
+            });
+
+            $("#newModal2").modal('show');
+        })
+    });
+    $("#file0").change(function () {
+        var objUrl = getObjectURL(this.files[0]);
+        console.log("objUrl = " + objUrl);
+        if (objUrl) {
+            $("#img0").attr("src", objUrl);
+        }
+    });
+    $("#file1").change(function () {
+        var objUrl = getObjectURL(this.files[0]);
+        console.log("objUrl = " + objUrl);
+        if (objUrl) {
+            $("#img1").attr("src", objUrl);
+        }
+    });
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    function fsubmit() {
+        var data = new FormData($('#addform')[0]);
+        $.ajax({
+            url: "{:U('sever')}",
+            type: 'POST',
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (e) {
+                $("#src").val(e)
+            }
+
+        })
+    }
+    function fsubmit1() {
+        var data = new FormData($('#editform')[0]);
+        $.ajax({
+            url: "{:U('sever')}",
+            type: 'POST',
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (e) {
+                $("#src1").val(e)
+            }
+
+        })
+    }
+</script>

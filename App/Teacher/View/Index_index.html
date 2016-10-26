@@ -1,0 +1,378 @@
+<div class="page-container">
+    <include file="Public:nav" />
+    <div class="page-Ri">
+        <div class="container-fluid">
+            <include file="Public:page-header" />
+            <include file="Public:subnav" />
+            <div class="btn-group col-lg-3 col-md-3 col-sm-3 col-xs-3 hasCard-title">
+                <div class="pull-left screenOrderMen">
+                    <span>班级选择 ：</span>
+                </div>
+                <div style="width: 70%;position: relative;float: left;">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:100%;">
+                        {$banji|default='请选择'}
+
+                    </button>
+                    <span class="qie-caret" style="right:10px;"></span>
+
+                    <input type='hidden' name='cid' value='{$cid}'/>
+                    <ul class="dropdown-menu select">
+                    
+                        <foreach name="info1.tinfo.cinfos" item="vo" >
+                          
+                              <li><a href="javascript:;" val='{$vo.id}'>{$vo.grade}-{$vo.name}</a></li>
+                        </foreach>
+                    </ul>
+                </div>
+            </div>
+            <div class="btn-group col-lg-9 col-md-9 col-sm-9 col-xs-9 hasCard-title">
+             
+                <div style="width:8%;position: relative;float: right;">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#newModal">新增</button>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0 20px 0 0;">
+
+                <!--                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0;line-height: 34px;margin-bottom: 10px">
+                                    <div class="pull-right">
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#newModal">新增</button>
+                                    </div>
+                                </div>-->
+                <table class="table table-hover table-bordered page-table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>学生姓名</th>
+                            <th>学号</th>
+                            <th>生日</th>
+                            <th>姓名</th>
+
+                            <th>关系一</th>
+                            <th>电话</th>
+                            <th>姓名</th>
+                            <th>关系二</th>
+                            <th>电话</th>
+                            <th>余额</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="page-active" id="tbody">
+                    <volist name='info' id='data'>
+                        <tr>
+                            <td>{$i}</td>
+                            <td>{$data.name}</td>
+                            <td>{$data.student_no}</td>
+                            <td>{$data.birthday}</td>
+                            <td>{$data.parent.real_name}</td>
+                            <td>{$data.family_ties}</td>
+                            <td>{$data.parent.phone}</td>
+
+                            <td>{$data.parent2.real_name}</td>
+                            <td>{$data.family_ties2}</td>
+                            <td>{$data.parent2.phone}</td>
+                            <td>{$data.money}</td>
+                            
+                            <td>
+                                <if condition="$data['class_id'] eq $master">
+                                <a data-toggle="modal" data-target="#watchListModal{$data.id}">查看</a><a href='javascript:;' del='{$data.id}'>删除</a>
+                                </if>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新增分类  newFoodModal -->
+<form id="add" method="post" enctype="multipart/form-data">
+    <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newFoodLabel">
+        <div class="modal-dialog watch-modal-box" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newFoodLabel">新增</h4>
+                </div>
+                <div class="modal-body state-modal">
+                    <table class="insert-tab">
+                        <tbody>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">学生姓名：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="name" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">学号：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="student_no" >
+                                    </div>
+                                </td>
+                            </tr>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">身份证：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="sfz" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">出生日期：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="date" class="form-control" style="width: 100%;" name="birthday" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">性别：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div> <input type="radio" name="sex"  value="1">男 <input type="radio"  name="sex" value="2">女
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">家长姓名：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="real_name" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">关系：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="family_ties" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">电话：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="phone" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">家长姓名：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="real_name2" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">关系：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="family_ties2" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">电话：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="phone2" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <!--                              <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">班费初始值：</th>
+                                                            <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                                                <div><input type="text" class="form-control pull-left" style="width: 100%;" name="money" >
+                                                                </div>
+                                                            </td>
+                                                        </tr>-->
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button type="submit" class="btn btn-primary"> 提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="class_id" value="{$cid}">
+</form>
+<!-- 查看商品  watchListModal -->
+<volist name='info' id='data'>
+    <form addform='{$data.id}'>
+        <div class="modal fade" id="watchListModal{$data.id}" tabindex="-1" role="dialog" aria-labelledby="newListLabel">
+            <div class="modal-dialog watch-modal-box" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="newListLabel">查看家长</h4>
+                    </div>
+                    <div class="modal-body state-modal">
+                        <table class="insert-tab">
+                            <tbody>
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 学生姓名 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;" name="name"  value="{$data.name}"  autocomplete="off">
+                                        </div>
+                                    </td>
+                                </tr>  
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 学号 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;" name="student_no"  value="{$data.student_no}"  autocomplete="off">
+                                        </div>
+                                    </td>
+                                </tr>  
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 身份证 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;" name="sfz"  value="{$data.sfz}"  autocomplete="off">
+                                        </div>
+                                    </td>
+                                </tr>  
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 生日 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input class="form-control" style="width: 100%;" name="birthday" value='{$data.birthday}' type="date">
+                                        </div>
+                                    </td>
+                                </tr>  
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 家长姓名 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;"  name='real_name'  value="{$data.parent.real_name}" autocomplete="off">
+                                            <input type="hidden" name="parent_id" value="{$data.parent.id}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 关系一 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;"  name='family_ties' value="{$data.family_ties}" autocomplete="off" >
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 电话 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;"  name='phone' value="{$data.parent.phone}" autocomplete="off" >
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 家长姓名 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;"  name='real_name2'  value="{$data.parent2.real_name}" autocomplete="off">
+                                            <input type="hidden" name="parent_id2" value="{$data.parent2.id}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 关系二 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;" placeholder="" name='family_ties2' value="{$data.family_ties2}" autocomplete="off" >
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 电话 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;" placeholder="" name='phone2' value="{$data.parent2.phone}" autocomplete="off" >
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 余额 ：</th>
+                                    <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                        <div><input type="text" class="form-control pull-left" style="width: 50%;" placeholder="" name='s_money' value="{$data.money}" readonly="readonly" autocomplete="off" >
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--                         <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 使用 ：</th>
+                                                        <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                                            <div><input type="text" class="form-control pull-left" style="width: 50%;" placeholder="" name='use_money'  autocomplete="off" >
+                                                            </div>
+                                                        </td>
+                                                    </tr>-->
+                                <!--                      <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <th class="col-lg-2 col-md-2  col-sm-3  col-xs-3 text-right"> 使用原因 ：</th>
+                                                        <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                                            <div><input type="text" class="form-control pull-left" style="width: 50%;" placeholder="" name='note'  autocomplete="off" >
+                                                            </div>
+                                                        </td>
+                                                    </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                        <button type="submit" class="btn btn-primary"> 提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type='hidden' name='id' value="{$data.id}"/>
+    </form>
+</volist>
+
+<script>
+    $("[addform]").submit(function () {
+        var fdata = $(this).serialize();
+        $.post("{:U('parent_edit')}", fdata, function (data) {
+            if (data.status != 1)
+            {
+                myalert(data.info);
+              location.reload();
+                return false;
+            }
+            myalert(data.info);
+         location.reload();
+        }, 'json');
+
+        return false;
+
+    });
+    $("#add").submit(function () {
+        var fdata = $(this).serialize();
+        $.post("{:U('student_add')}", fdata, function (data) {
+            if (data.status != 1)
+            {
+                myalert(data.info);
+                location.reload();
+                return false;
+            }
+            myalert(data.info);
+            location.reload();
+        }, 'json');
+
+        return false;
+
+    });
+    $(document).on('click', "[del]", function () {
+        if (confirm("您确定要吗？"))
+        {
+            $.post("{:U('student_del')}", {id: $(this).attr('del')}, function (data) {
+                if (data.status == 0)
+                {
+                    myalert(data.info);
+                    return false;
+                }
+                location.reload();
+            }, 'json');
+        }
+    });
+      $(".select li a").click(function () {
+        var word = $(this).html();
+        var val = $(this).attr('val');
+        $(this).parent().parent().parent().children('button').html(word);
+        $(this).parent().parent().parent().children('[type=hidden]').val(val);
+       
+             var str="?cid="+val;
+       
+      
+        window.location.href='{:U("index'+str+'")}'
+    });
+</script>

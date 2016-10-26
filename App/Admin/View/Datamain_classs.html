@@ -1,0 +1,167 @@
+<div class="page-container">
+    <include file="Public:nav" />
+    <div class="page-Ri">
+        <div class="container-fluid">
+            <include file="Public:page-header" />
+            <include file="Public:subnav" />
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0 20px 0 0;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                     style="padding: 0;line-height: 34px;margin-bottom: 10px">
+                    <div class="pull-right">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#newModal">新增</button>
+                    </div>
+                </div>
+                <table class="table table-hover table-bordered page-table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>名称</th>
+                            <th>代码</th>
+                            <th>学校</th>
+                            <th>年级</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="page-active" id="tbody">
+                    <volist name='list' id='data'>
+                        <tr>
+                            <td>{$i}</td>
+                            <td>{$data.name}</td>
+                            <td>{$data.code}</td>
+                            <td>{$data.sname}</td>
+                            <td>{$data.grade}</td>
+                            <td><a href='javascript:;' edit='{$data.id}'>查看</a><a href='javascript:;' del='{$data.id}'>删除</a>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新增分类  newFoodModal -->
+<form id="addform">
+    <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newFoodLabel">
+        <div class="modal-dialog watch-modal-box" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newFoodLabel">新增/查看</h4>
+                </div>
+                <div class="modal-body state-modal">
+                    <table class="insert-tab">
+                        <tbody>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">名称：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="name" id="addname">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right"> 所属学校 ：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="downMenu"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            请选择
+                                            <span class="caret"></span>
+                                        </button>
+                                        <input type="hidden" name="school_id" id="addschool_id"/>
+                                        <ul class="dropdown-menu select" aria-labelledby="downMenu">
+                                            <volist name="schoollist" id="data2">
+                                                <li><a href="javascript:;" val="{$data2.id}">{$data2.name}</a></li>
+                                            </volist>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">代码：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="code" id="addcode">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <th class="col-lg-2 col-md-2  col-sm-2  col-xs-2 text-right">年级：</th>
+                                <td class="col-lg-9 col-md-9  col-sm-9  col-xs-9">
+                                    <div><input type="text" class="form-control pull-left" style="width: 100%;" name="grade" id="addgrade">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button type="submit" class="btn btn-primary"> 提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type='hidden' name='id' id="addid">
+</form>
+<script>
+    $(document).ready(function () {
+        $(".select li a").click(function () {
+            var word = $(this).html();
+            var val = $(this).attr('val');
+            $(this).parent().parent().parent().children('button').html(word);
+            $(this).parent().parent().parent().children('[type=hidden]').val(val);
+        });
+        $("#addform").submit(function () {
+            var fdata = $(this).serialize();
+            $.post("{:U('classsAdd')}", fdata, function (data) {
+                if (data.status == 0)
+                {
+                    myalert(data.info);
+                    return false;
+                }
+                $("#newModal").modal('hide');
+                location.reload();
+            }, 'json');
+            return false;
+        });
+        $(document).on('click', "[edit]", function () {
+            $.post("{:U('')}", {id: $(this).attr('edit')}, function (data) {
+                if (data.status == 0)
+                {
+                    myalert(data.info);
+                    return false;
+                }
+                $("#addname").val(data.info.name);
+                $("#addid").val(data.info.id);
+                $("#addcode").val(data.info.code);
+                $("#addschool_id").val(data.info.school_id);
+                $("#downMenu").html(data.info.sname);
+                $("#addgrade").val(data.info.grade);
+                $('#newModal').modal('show');
+            }, 'json');
+        });
+        $('#newModal').on('hide.bs.modal', function () {
+            $("#addname").val('');
+            $("#addid").val('');
+            $("#addcode").val('');
+            $("#addschool_id").val('');
+            $("#downMenu").html('请选择');
+            $("#addgrade").val('');
+        });
+        $(document).on('click', "[del]", function () {
+            if (confirm("您确定要吗？"))
+            {
+                $.post("{:U('classsDel')}", {id: $(this).attr('del')}, function (data) {
+                    if (data.status == 0)
+                    {
+                        myalert(data.info);
+                        return false;
+                    }
+                    location.reload();
+                }, 'json');
+            }
+        });
+    });
+
+</script>
